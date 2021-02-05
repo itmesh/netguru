@@ -7,8 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:netguru/features/add_new_value/add_new_page.dart';
 import 'package:netguru/features/favorites/favorites_page.dart';
 import 'package:netguru/features/values/values_page.dart';
-import 'package:netguru/main.dart';
-import 'package:netguru/netguru_values_manager.dart';
+import 'package:netguru/helpers/netguru_values_manager.dart';
+import 'package:netguru/locator/service_locator.dart';
 import 'package:netguru/resources/strings.dart';
 
 class GeneratorPage extends StatefulWidget {

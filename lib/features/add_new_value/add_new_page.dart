@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:netguru/main.dart';
-import 'package:netguru/netguru_values_manager.dart';
+import 'package:netguru/helpers/netguru_values_manager.dart';
+import 'package:netguru/locator/service_locator.dart';
 
 class AddNewValuePage extends StatelessWidget {
   final _textEditingController = TextEditingController();
