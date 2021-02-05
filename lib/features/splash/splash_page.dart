@@ -22,6 +22,7 @@ class _SplashPageState extends State<SplashPage>
   final NetguruValuesManager _valuesManager = getIt.get();
   bool _shouldCloseSplashPage = false;
   Animation _animation;
+  AnimationController controller;
   Timer _timer;
 
   @override
@@ -53,7 +54,7 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _setUpAnimation() {
-    final controller = AnimationController(
+    controller = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
@@ -84,8 +85,23 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _navigateToNextPage() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => GeneratorPage()),
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        transitionDuration: Duration(milliseconds: 600),
+        pageBuilder: (_, __, ___) => GeneratorPage(),
+        transitionsBuilder: (_, animation, ___, child) {
+          return FadeTransition(
+            opacity: animation.drive(Tween(begin: 0.0, end: 1.0)),
+            child: child,
+          );
+        },
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

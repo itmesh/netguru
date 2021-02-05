@@ -93,7 +93,25 @@ class _GeneratorPageState extends State<GeneratorPage> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ValuesPage()),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          ValuesPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = Offset(-1.0, 0.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end).chain(
+                          CurveTween(curve: curve),
+                        );
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -117,7 +135,25 @@ class _GeneratorPageState extends State<GeneratorPage> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => FavoritesPage()),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          FavoritesPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        var begin = Offset(1.0, 0.0);
+                        var end = Offset.zero;
+                        var curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end).chain(
+                          CurveTween(curve: curve),
+                        );
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
