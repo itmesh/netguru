@@ -1,14 +1,23 @@
 import 'package:hive/hive.dart';
 
+part 'netguru_value.g.dart';
+
 @HiveType(typeId: 1)
 class NetguruValue {
   @HiveField(0)
-  String value;
+  final String value;
   @HiveField(1)
-  bool favorite;
+  final bool favorite;
+
+  NetguruValue(this.value, this.favorite);
 
   @override
   String toString() {
     return 'NetguruValue{value: $value, favorite: $favorite}';
   }
+
+  NetguruValue copyWith({String value, bool favorite}) => NetguruValue(
+        value ?? this.value,
+        favorite ?? this.favorite,
+      );
 }

@@ -1,46 +1,56 @@
-import 'dart:io';
-
 import 'package:hive/hive.dart';
-import 'package:netguru/helpers/string_csv_mapper.dart';
+import 'package:netguru/data/netguru_value.dart';
+import 'package:netguru/resources/strings.dart';
+import 'package:path_provider/path_provider.dart';
 
 abstract class Preferences {
   static final netguruValuesKey = 'netguruValuesKey';
+
+  void saveNetguruValue(NetguruValue value);
+
+  List<NetguruValue> getNetguruValues();
+
+  void addNetguruValueToFavoritesAt(int index);
+
+  void removeNetguruValueAt(int index);
 }
 
 class HivePreferences extends Preferences {
-  final _boxName = 'netguru';
+  final _boxName = 'netguru_values';
+  static List values = [];
 
-  Box get box => Hive.box(_boxName);
+  Box<NetguruValue> box;
 
   Future<void> init() async {
+    final document = await getApplicationDocumentsDirectory();
     Hive
-      ..init(Directory.current.path);
-      //..registerAdapter(PersonAdapter());
-    await Hive.openBox('_boxName');
-  }
-
-  Future<List<String>> getNetguruValues() async {
-    final String values = box.get(Preferences.netguruValuesKey) ?? '';
-    if (values.isEmpty) {
-      return [];
-    } else {
-      return StringCSVMapper.fromCSV(values);
-    }
-  }
-
-  Future<void> removeNetguruValue(String value) async {
-    final values = await getNetguruValues();
-    if (values.isNotEmpty) {
-      values.remove(value);
-      await saveNetguruValues(StringCSVMapper.toCSV(values));
-    }
-  }
-
-  Future<void> saveNetguruValues(String values) async {
-    await saveNetguruValues(values);
+      ..init(document.path)
+      ..registerAdapter(NetguruValueAdapter());
+    bool exists = await Hive.boxExists(_boxName);
+    box = await Hive.openBox(_boxName);
+    if (!exists)
+      box.addAll(Strings.netguruCoreValues.map((e) => NetguruValue(e, false)));
   }
 
   Future<void> close() async {
     await box.close();
+  }
+
+  @override
+  List<NetguruValue> getNetguruValues() => box.values.toList();
+
+  @override
+  void addNetguruValueToFavoritesAt(int index) {
+    box.putAt(index, box.getAt(index).copyWith(favorite: true));
+  }
+
+  @override
+  void removeNetguruValueAt(int index) {
+    // TODO: implement removeNetguruValueAt
+  }
+
+  @override
+  void saveNetguruValue(NetguruValue value) {
+    box.add(value);
   }
 }
