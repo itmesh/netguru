@@ -20,12 +20,11 @@ class _GeneratorPageState extends State<GeneratorPage> {
   final _valuesManager = getIt.get<NetguruValuesManager>();
   final _random = Random();
 
-  int _generatedValue = -1;
+  int _generatedValue = 0;
 
   @override
   void initState() {
     super.initState();
-    _valuesManager.init();
     Timer.periodic(Duration(seconds: 5), (timer) {
       setState(() {
         _generatedValue = _random.nextInt(_valuesManager.values.length);
@@ -62,12 +61,18 @@ class _GeneratorPageState extends State<GeneratorPage> {
         ),
         openBuilder: (_, __) => AddNewValuePage(),
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Text(
-            _generatedValue != -1
-                ? _valuesManager.values[_generatedValue].value
-                : 'initializing',
+          child: AnimatedSwitcher(
+            duration: Duration(milliseconds: 400),
+            child: Text(
+              _generatedValue != -1
+                  ? _valuesManager.values[_generatedValue].value
+                  : 'initializing',
+              key: ValueKey<String>(
+                  _valuesManager.values[_generatedValue].value),
+            ),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:netguru/features/generator/ui/pages/generator_page.dart';
+import 'package:netguru/features/splash/splash_page.dart';
 import 'package:netguru/locator/service_locator.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
-      home: GeneratorPage(),
+      home: SplashPage(),
     );
   }
 }

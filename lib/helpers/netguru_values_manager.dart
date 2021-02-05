@@ -4,14 +4,11 @@ import 'package:netguru/local_data/preferences.dart';
 class NetguruValuesManager {
   final HivePreferences preferences = HivePreferences();
 
-  List<NetguruValue> _values;
-
   Future<void> init() async {
     await preferences.init();
-    _values = preferences.getNetguruValues();
   }
 
-  List<NetguruValue> get values => _values;
+  List<NetguruValue> get values => preferences.getNetguruValues();
 
   List<NetguruValue> get favorites =>
       values.where((element) => element.favorite).toList();
@@ -21,8 +18,6 @@ class NetguruValuesManager {
       );
 
   void addToFavoriteAt(int index) {
-    final value = _values.removeAt(index);
-    _values.insert(index, value.copyWith(favorite: true));
     preferences.addNetguruValueToFavoritesAt(index);
   }
 }
