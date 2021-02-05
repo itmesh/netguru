@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:netguru/data/netguru_value.dart';
+import 'package:netguru/local_data/netguru_value.dart';
 import 'package:netguru/resources/strings.dart';
 import 'package:path_provider/path_provider.dart';
 
