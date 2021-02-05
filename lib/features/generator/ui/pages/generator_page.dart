@@ -10,6 +10,7 @@ import 'package:netguru/features/values/values_page.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
 import 'package:netguru/resources/strings.dart';
+import 'package:netguru/resources/text_styles.dart';
 
 class GeneratorPage extends StatefulWidget {
   @override
@@ -36,12 +37,10 @@ class _GeneratorPageState extends State<GeneratorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NG Values'),
+        title: Text(Strings.appBarTitle, style: TextStyles.bodyBold),
         actions: [
           IconButton(
-            onPressed: () {
-              _valuesManager.addToFavoriteAt(_generatedValue);
-            },
+            onPressed: () => _valuesManager.addToFavoriteAt(_generatedValue),
             icon: Icon(
               Icons.favorite,
               color: Theme.of(context).secondaryHeaderColor,
@@ -53,11 +52,11 @@ class _GeneratorPageState extends State<GeneratorPage> {
         closedShape: CircleBorder(),
         closedElevation: 10,
         transitionDuration: Duration(milliseconds: 800),
-        closedBuilder: (_, __) => FloatingActionButton(
-          elevation: 10,
-          foregroundColor: Colors.black,
+        closedBuilder: (_, __) => Container(
+          color: Colors.white,
+          width: 64.0,
+          height: 64.0,
           child: Icon(Icons.add),
-          backgroundColor: Colors.white,
         ),
         openBuilder: (_, __) => AddNewValuePage(),
       ),
@@ -67,17 +66,22 @@ class _GeneratorPageState extends State<GeneratorPage> {
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: 400),
             child: Text(
-              _generatedValue != -1
-                  ? _valuesManager.values[_generatedValue].value
-                  : 'initializing',
+              _valuesManager.values[_generatedValue].value,
               key: ValueKey<String>(
-                  _valuesManager.values[_generatedValue].value),
+                _valuesManager.values[_generatedValue].value,
+              ),
+              style: TextStyles.title,
+              textAlign: TextAlign.center,
             ),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: _buildBottomBar(),
+    );
+  }
+
+  Widget _buildBottomBar() => BottomAppBar(
         color: Theme.of(context).primaryColor,
         shape: CircularNotchedRectangle(),
         notchMargin: 8.0,
@@ -92,36 +96,18 @@ class _GeneratorPageState extends State<GeneratorPage> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: () => Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          ValuesPage(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = Offset(-1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end).chain(
-                          CurveTween(curve: curve),
-                        );
-
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    ),
-                  ),
+                  onTap: () => _navigateToValuesPage(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.format_quote_sharp, color: Colors.white),
+                        SizedBox(height: 4.0),
                         Text(
                           Strings.valuesBottomBar,
-                          style: TextStyle(color: Colors.white),
+                          style:
+                              TextStyles.caption.copyWith(color: Colors.white),
                         ),
                       ],
                     ),
@@ -134,36 +120,18 @@ class _GeneratorPageState extends State<GeneratorPage> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: () => Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          FavoritesPage(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = Offset(1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end).chain(
-                          CurveTween(curve: curve),
-                        );
-
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    ),
-                  ),
+                  onTap: () => _navigateToFavoritesPage(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.favorite, color: Colors.white),
+                        SizedBox(height: 4.0),
                         Text(
                           Strings.favoritesBottomBar,
-                          style: TextStyle(color: Colors.white),
+                          style:
+                              TextStyles.caption.copyWith(color: Colors.white),
                         ),
                       ],
                     ),
@@ -174,6 +142,45 @@ class _GeneratorPageState extends State<GeneratorPage> {
             ],
           ),
         ),
+      );
+
+  void _navigateToValuesPage() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => ValuesPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final begin = Offset(-1.0, 0.0);
+          final end = Offset.zero;
+          final tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: Curves.ease),
+          );
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void _navigateToFavoritesPage() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            FavoritesPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final begin = Offset(1.0, 0.0);
+          final end = Offset.zero;
+          final tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: Curves.ease),
+          );
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 abstract class Strings {
+  static const String appBarTitle = 'NG Values';
   static const String valuesBottomBar = 'Values';
   static const String favoritesBottomBar = 'Favorites';
   static const List<String> netguruCoreValues = [
