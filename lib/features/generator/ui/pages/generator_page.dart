@@ -1,11 +1,12 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru/features/add_new_value/add_new_page.dart';
 import 'package:netguru/features/favorites/favorites_page.dart';
+import 'package:netguru/features/generator/ui/cubit/generator_cubit.dart';
 import 'package:netguru/features/values/values_page.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
@@ -18,19 +19,13 @@ class GeneratorPage extends StatefulWidget {
 }
 
 class _GeneratorPageState extends State<GeneratorPage> {
-  final _valuesManager = getIt.get<NetguruValuesManager>();
-  final _random = Random();
-
-  int _generatedValue = 0;
+  GeneratorCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 5), (timer) {
-      setState(() {
-        _generatedValue = _random.nextInt(_valuesManager.values.length);
-      });
-    });
+    _setUpCubit();
+    _cubit.startGenerator();
   }
 
   @override
@@ -39,11 +34,16 @@ class _GeneratorPageState extends State<GeneratorPage> {
       appBar: AppBar(
         title: Text(Strings.appBarTitle, style: TextStyles.bodyBold),
         actions: [
-          IconButton(
-            onPressed: () => _valuesManager.addToFavoriteAt(_generatedValue),
-            icon: Icon(
-              Icons.favorite,
-              color: Theme.of(context).secondaryHeaderColor,
+          BlocBuilder(
+            cubit: _cubit,
+            builder: (_, GeneratorState state) => IconButton(
+              onPressed: () => state.favorite
+                  ? _cubit.addToFavorites()
+                  : _cubit.removeFromFavorites(),
+              icon: Icon(
+                state.favorite ? Icons.favorite : Icons.favorite_border,
+                color: Theme.of(context).secondaryHeaderColor,
+              ),
             ),
           )
         ],
@@ -63,15 +63,16 @@ class _GeneratorPageState extends State<GeneratorPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 400),
-            child: Text(
-              _valuesManager.values[_generatedValue].value,
-              key: ValueKey<String>(
-                _valuesManager.values[_generatedValue].value,
+          child: BlocBuilder(
+            cubit: _cubit,
+            builder: (_, GeneratorState state) => AnimatedSwitcher(
+              duration: Duration(milliseconds: 400),
+              child: Text(
+                state.value,
+                key: ValueKey<int>(state.valueIndex),
+                style: TextStyles.title,
+                textAlign: TextAlign.center,
               ),
-              style: TextStyles.title,
-              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -143,6 +144,19 @@ class _GeneratorPageState extends State<GeneratorPage> {
           ),
         ),
       );
+
+  void _setUpCubit() {
+    final valuesManager = getIt<NetguruValuesManager>();
+    _cubit = GeneratorCubit(
+      GeneratorState(
+        valueIndex: 0,
+        value: valuesManager.values[0].value,
+        favorite: valuesManager.values[0].favorite,
+      ),
+      valuesManager,
+      getIt<Random>(),
+    );
+  }
 
   void _navigateToValuesPage() {
     Navigator.of(context).push(
