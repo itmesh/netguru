@@ -5,6 +5,7 @@ import 'package:netguru/locator/service_locator.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/resources/strings.dart';
 import 'package:netguru/resources/text_styles.dart';
+import 'package:netguru/theme/netguru_theme.dart';
 
 class ValuesPage extends StatelessWidget {
   @override
@@ -15,16 +16,24 @@ class ValuesPage extends StatelessWidget {
         title: Text(Strings.values, style: TextStyles.bodyBold),
         leading: CloseButton(),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Card(
-            child: ListTile(
-              title: Text(values[index].value, style: TextStyles.caption),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Card(
+              child: ListTile(
+                title: Text(
+                  values[index].value,
+                  style: TextStyles.caption.copyWith(
+                    color: NetguruTheme.of(context).secondaryColor,
+                  ),
+                ),
+              ),
             ),
           ),
+          itemCount: values.length,
         ),
-        itemCount: values.length,
       ),
     );
   }

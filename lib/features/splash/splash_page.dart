@@ -8,6 +8,7 @@ import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
 import 'package:netguru/resources/netguru_colors.dart';
 import 'package:netguru/resources/images.dart';
+import 'package:netguru/theme/netguru_theme.dart';
 
 final _splashLogoSize = 200.0;
 final _splashMinimalDuration = Duration(seconds: 3);
@@ -37,7 +38,7 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: NetguruColors.background,
+        color: NetguruTheme.of(context).backgroundColor,
         child: Center(
           child: AnimatedBuilder(
             animation: _animation,
