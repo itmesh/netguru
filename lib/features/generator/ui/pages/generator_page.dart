@@ -56,7 +56,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
       floatingActionButton: OpenContainer(
         closedShape: CircleBorder(),
         closedElevation: 10,
-        transitionDuration: Duration(milliseconds: 800),
+        transitionDuration: Duration(milliseconds: 400),
         closedBuilder: (_, __) => Container(
           color: Colors.white,
           width: 64.0,
@@ -111,7 +111,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                         Icon(Icons.format_quote_sharp, color: Colors.white),
                         SizedBox(height: 4.0),
                         Text(
-                          Strings.valuesBottomBar,
+                          Strings.values,
                           style: TextStyles.caption.copyWith(
                             color: Colors.white,
                           ),
@@ -136,7 +136,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                         Icon(Icons.favorite, color: Colors.white),
                         SizedBox(height: 4.0),
                         Text(
-                          Strings.favoritesBottomBar,
+                          Strings.favorites,
                           style: TextStyles.caption.copyWith(
                             color: Colors.white,
                           ),

@@ -1,7 +1,7 @@
 abstract class Strings {
   static const String appBarTitle = 'NG Values';
-  static const String valuesBottomBar = 'Values';
-  static const String favoritesBottomBar = 'Favorites';
+  static const String values = 'Values';
+  static const String favorites = 'Favorites';
   static const List<String> netguruCoreValues = [
     'Exceed clients\' and colleagues\' expectations',
     'Take ownership and question the status quo in a constructive manner',
