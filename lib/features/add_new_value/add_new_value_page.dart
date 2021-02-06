@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
 
-class AddNewValuePage extends StatelessWidget {
+class AddNewValuePage extends StatefulWidget {
+  @override
+  _AddNewValuePageState createState() => _AddNewValuePageState();
+}
+
+class _AddNewValuePageState extends State<AddNewValuePage> {
   final _textEditingController = TextEditingController();
   final _inputKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
+    showDialog()
     return Scaffold(
       appBar: AppBar(
         title: Text('Add new value'),
@@ -50,5 +57,11 @@ class AddNewValuePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
   }
 }
