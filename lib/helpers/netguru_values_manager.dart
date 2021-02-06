@@ -17,11 +17,9 @@ class NetguruValuesManager {
         NetguruValue(value, false),
       );
 
-  void addToFavoritesAt(int index) {
-    preferences.addNetguruValueToFavoritesAt(index);
-  }
+  void addToFavoritesAt(int index) =>
+      preferences.addNetguruValueToFavoritesAt(index);
 
-  void removeFromFavoritesAt(int index) {
-    preferences.addNetguruValueToFavoritesAt(index);
-  }
+  void removeFromFavoritesAt(int index) =>
+      preferences.removeNetguruValueAt(index);
 }

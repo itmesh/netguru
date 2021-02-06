@@ -4,7 +4,8 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netguru/features/add_new_value/add_new_page.dart';
+
+import 'package:netguru/features/add_new_value/add_new_value_page.dart';
 import 'package:netguru/features/favorites/favorites_page.dart';
 import 'package:netguru/features/generator/ui/cubit/generator_cubit.dart';
 import 'package:netguru/features/values/values_page.dart';
@@ -36,15 +37,19 @@ class _GeneratorPageState extends State<GeneratorPage> {
         actions: [
           BlocBuilder(
             cubit: _cubit,
-            builder: (_, GeneratorState state) => IconButton(
-              onPressed: () => state.favorite
-                  ? _cubit.addToFavorites()
-                  : _cubit.removeFromFavorites(),
-              icon: Icon(
-                state.favorite ? Icons.favorite : Icons.favorite_border,
-                color: Theme.of(context).secondaryHeaderColor,
-              ),
-            ),
+            builder: (_, GeneratorState state) {
+              return IconButton(
+                onPressed: () {
+                  state.favorite
+                      ? _cubit.removeFromFavorites()
+                      : _cubit.addToFavorites();
+                },
+                icon: Icon(
+                  state.favorite ? Icons.favorite : Icons.favorite_border,
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
+              );
+            },
           )
         ],
       ),
@@ -107,8 +112,9 @@ class _GeneratorPageState extends State<GeneratorPage> {
                         SizedBox(height: 4.0),
                         Text(
                           Strings.valuesBottomBar,
-                          style:
-                              TextStyles.caption.copyWith(color: Colors.white),
+                          style: TextStyles.caption.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -131,8 +137,9 @@ class _GeneratorPageState extends State<GeneratorPage> {
                         SizedBox(height: 4.0),
                         Text(
                           Strings.favoritesBottomBar,
-                          style:
-                              TextStyles.caption.copyWith(color: Colors.white),
+                          style: TextStyles.caption.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),

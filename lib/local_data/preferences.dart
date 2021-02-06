@@ -46,7 +46,7 @@ class HivePreferences extends Preferences {
 
   @override
   void removeNetguruValueAt(int index) {
-    // TODO: implement removeNetguruValueAt
+    box.putAt(index, box.getAt(index).copyWith(favorite: false));
   }
 
   @override

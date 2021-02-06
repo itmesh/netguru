@@ -15,18 +15,9 @@ class FavoritesPage extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Dismissible(
-            onDismissed: (_) {},
-            background: Card(
-              child: Container(
-                color: Colors.red,
-              ),
-            ),
-            key: ValueKey(index),
-            child: Card(
-              child: ListTile(
-                title: Text(values[index].value),
-              ),
+          child: Card(
+            child: ListTile(
+              title: Text(values[index].value),
             ),
           ),
         ),

@@ -25,7 +25,7 @@ class GeneratorCubit extends Cubit<GeneratorState> {
   }
 
   void removeFromFavorites() {
-    _valuesManager.addToFavoritesAt(state.valueIndex);
+    _valuesManager.removeFromFavoritesAt(state.valueIndex);
     emit(state.copyWith(favorite: false));
   }
 
