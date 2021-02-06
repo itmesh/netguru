@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:get_it/get_it.dart';
-import 'package:netguru/features/generator/ui/cubit/generator_cubit.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 
 final getIt = GetIt.instance;

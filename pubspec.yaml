@@ -35,16 +35,13 @@ dependencies:
   path_provider: ^1.6.5
   flutter_bloc: ^6.1.1
   equatable: ^1.2.5
+  mockito: ^4.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^0.8.1
   build_runner: 1.10.3
-
-dependency_overrides:
-  analyzer: '0.40.6'
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -16,24 +16,21 @@ class FavoritesPage extends StatelessWidget {
         title: Text(Strings.favorites, style: TextStyles.bodyBold),
         leading: CloseButton(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Card(
-              child: ListTile(
-                title: Text(
-                  values[index].value,
-                  style: TextStyles.caption.copyWith(
-                    color: NetguruTheme.of(context).secondaryColor,
-                  ),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Card(
+            child: ListTile(
+              title: Text(
+                values[index].value,
+                style: TextStyles.caption.copyWith(
+                  color: NetguruTheme.of(context).secondaryColor,
                 ),
               ),
             ),
           ),
-          itemCount: values.length,
         ),
+        itemCount: values.length,
       ),
     );
   }

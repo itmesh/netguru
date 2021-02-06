@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:netguru/features/generator/pages/generator_page.dart';
 
-import 'package:netguru/features/generator/ui/pages/generator_page.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
-import 'package:netguru/resources/netguru_colors.dart';
 import 'package:netguru/resources/images.dart';
 import 'package:netguru/theme/netguru_theme.dart';
 

@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:netguru/features/add_new_value/add_new_value_page.dart';
 import 'package:netguru/features/favorites/favorites_page.dart';
-import 'package:netguru/features/generator/ui/cubit/generator_cubit.dart';
+import 'package:netguru/features/generator/cubit/generator_cubit.dart';
 import 'package:netguru/features/values/values_page.dart';
 import 'package:netguru/helpers/netguru_values_manager.dart';
 import 'package:netguru/locator/service_locator.dart';
