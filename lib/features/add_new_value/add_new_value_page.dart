@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -74,7 +75,7 @@ class _AddNewValuePageState extends State<AddNewValuePage>
                     alignment: Alignment.center,
                     duration: Duration(milliseconds: 300),
                     vsync: this,
-                    child: showAddButton
+                    child: showAddButton || kIsWeb
                         ? RaisedButton(
                             color: Theme.of(context).primaryColor,
                             onPressed: () {
