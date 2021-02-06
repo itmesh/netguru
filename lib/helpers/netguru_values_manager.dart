@@ -21,5 +21,5 @@ class NetguruValuesManager {
       preferences.addNetguruValueToFavoritesAt(index);
 
   void removeFromFavoritesAt(int index) =>
-      preferences.removeNetguruValueAt(index);
+      preferences.removeNetguruValueFromFavoritesAt(index);
 }

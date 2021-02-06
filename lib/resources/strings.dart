@@ -11,4 +11,8 @@ abstract class Strings {
     'Be ambitious, grow yourself and the people around you',
     'Recognize excellence and engagement',
   ];
+  static const String emptyValueError = 'Value can not be empty';
+  static const String newValueHint = 'Insert new Netguru value';
+  static const String addButtonText = 'Add';
+  static const String newValueAppBarTitle = 'Add new value';
 }

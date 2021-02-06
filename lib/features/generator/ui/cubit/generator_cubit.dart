@@ -41,8 +41,10 @@ class GeneratorCubit extends Cubit<GeneratorState> {
     });
   }
 
+  void addNewValue(String value) => _valuesManager.add(value);
+
   void stopGenerator() {
-    timer.cancel();
+    timer?.cancel();
   }
 }
 

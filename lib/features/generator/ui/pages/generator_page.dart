@@ -63,7 +63,12 @@ class _GeneratorPageState extends State<GeneratorPage> {
           height: 64.0,
           child: Icon(Icons.add),
         ),
-        openBuilder: (_, __) => AddNewValuePage(),
+        openBuilder: (_, __) => AddNewValuePage(
+          onSave: (ctx, value) {
+            Navigator.of(ctx).pop();
+            _cubit.addNewValue(value);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:netguru/helpers/netguru_values_manager.dart';
-import 'package:netguru/locator/service_locator.dart';
+import 'package:netguru/resources/strings.dart';
+import 'package:netguru/resources/text_styles.dart';
+
+typedef OnSave = void Function(BuildContext context, String value);
 
 class AddNewValuePage extends StatefulWidget {
+  final OnSave onSave;
+
+  const AddNewValuePage({Key key, @required this.onSave}) : super(key: key);
+
   @override
   _AddNewValuePageState createState() => _AddNewValuePageState();
 }
@@ -15,10 +21,9 @@ class _AddNewValuePageState extends State<AddNewValuePage> {
 
   @override
   Widget build(BuildContext context) {
-    showDialog()
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add new value'),
+        title: Text(Strings.newValueAppBarTitle, style: TextStyles.bodyBold),
         leading: CloseButton(),
       ),
       body: SafeArea(
@@ -28,28 +33,35 @@ class _AddNewValuePageState extends State<AddNewValuePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(32.0),
                   child: TextFormField(
                     key: _inputKey,
+                    cursorColor: Theme.of(context).primaryColor,
                     validator: (value) => (value?.isEmpty ?? true)
-                        ? 'Value can not ve empty'
+                        ? Strings.emptyValueError
                         : null,
                     decoration: InputDecoration(
-                      hintText: 'Insert new Netguru value',
+                      hintText: Strings.newValueHint,
+                      hintStyle: TextStyles.caption,
                     ),
+                    style: TextStyles.bodyBold.copyWith(height: 1.5),
                     controller: _textEditingController,
                   ),
                 ),
                 RaisedButton(
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {
                     if (_inputKey.currentState.validate()) {
-                      Navigator.of(context).maybePop();
-                      getIt
-                          .get<NetguruValuesManager>()
-                          .add(_textEditingController.text);
+                      widget.onSave(context, _textEditingController.text);
                     }
                   },
-                  child: Text('Add'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      Strings.addButtonText,
+                      style: TextStyles.bodyBold.copyWith(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             ),
